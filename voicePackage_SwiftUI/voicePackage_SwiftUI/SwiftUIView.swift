@@ -7,31 +7,36 @@
 
 import SwiftUI
 
+struct V_Box: Identifiable {
+    var id: Int
+    var title: String
+}
+
 struct SwiftUIView: View {
-    let boxes: [Box] = [
-        Box(1, title: "SwiftUIView", destination: SwiftUIView()),
-        Box(2, title: "DetailView", destination: DetailView()),
-        Box(3, title: "DetailView2", destination: SwiftUIView2())
-    ]
-    
+    let boxes: [V_Box] = [
+        V_Box(id: 1, title: "Hello, World"),
+        V_Box(id: 2, title: "Hello"),
+        V_Box(id: 3, title: "hello")
+        ]
     var body: some View {
+        NavigationStack{
             ScrollView {
                 VStack {
                     ForEach(boxes) { box in
-                        Button(action: {
-                            // Handle button action here if needed
-                            print(box.id)
-                        }) {
-                            NavigationLink(destination: box.destination) {
-                                HStack {
-                                    Text(box.title)
-                                }
-                            }
+                    Button(action: {
+                        print(box.id)
+                    }) {
+                        HStack {
+                            Text(box.title)
                         }
-                        .buttonStyle(backGroundSyle())
+                    }
+                    .buttonStyle(backGroundSyle())
                     }
                 }
+            }
+            .navigationTitle("國棟")
         }
+        
     }
 }
 
