@@ -34,9 +34,9 @@ struct Box: Identifiable {
 
 struct ContentView: View {
     let boxes: [Box] = [
-        Box(1, title: "SwiftUIView", destination: SwiftUIView()),
-        Box(2, title: "DetailView", destination: DetailView()),
-        Box(3, title: "DetailView2", destination: SwiftUIView2())
+        Box(1, title: "國棟", destination: SwiftUIView()),
+        Box(2, title: "統神", destination: DetailView()),
+        Box(3, title: "環境", destination: SwiftUIView2())
     ]
     
     var body: some View {
