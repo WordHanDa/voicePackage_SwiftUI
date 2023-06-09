@@ -3,10 +3,10 @@ import SwiftUI
 struct backGroundSyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .frame(minWidth: 0, maxWidth: .infinity)
+            .frame(minWidth: 0, maxWidth: .greatestFiniteMagnitude)
             .fontWeight(.bold)
             .font(.title)
-            .padding(.horizontal, 20)
+            .padding(.horizontal, 0.0)
             .background(Color.purple)
             .cornerRadius(40)
             .foregroundColor(.white)
@@ -15,37 +15,50 @@ struct backGroundSyle: ButtonStyle {
                 RoundedRectangle(cornerRadius: 40)
                     .stroke(Color.purple, lineWidth: 5)
             )
-            .scaleEffect(configuration.isPressed ? 0.9:1.0)
+            .scaleEffect(configuration.isPressed ? 0.9 : 1.0)
     }
 }
 
 struct Box: Identifiable {
     var id: Int
     var title: String
+    var destination: AnyView
+    
+    init<T: View>(_ id: Int, title: String, destination: T) {
+        self.id = id
+        self.title = title
+        self.destination = AnyView(destination)
+    }
 }
+
 
 struct ContentView: View {
     let boxes: [Box] = [
-        Box(id: 1, title: "Hello, World"),
-        Box(id: 2, title: "Hello"),
-        Box(id: 3, title: "hello"),
-        Box(id: 4, title: "...")
+        Box(1, title: "SwiftUIView", destination: SwiftUIView()),
+        Box(2, title: "DetailView", destination: DetailView()),
+        Box(3, title: "DetailView2", destination: SwiftUIView2())
     ]
     
     var body: some View {
-        ScrollView {
-            VStack {
-                ForEach(boxes) { box in
-                    Button(action: {
-                        print(box.id)
-                    }) {
-                        HStack {
-                            Text(box.title)
+        NavigationView {
+            ScrollView {
+                VStack {
+                    ForEach(boxes) { box in
+                        Button(action: {
+                            // Handle button action here if needed
+                            print(box.id)
+                        }) {
+                            NavigationLink(destination: box.destination) {
+                                HStack {
+                                    Text(box.title)
+                                }
+                            }
                         }
+                        .buttonStyle(backGroundSyle())
                     }
-                    .buttonStyle(backGroundSyle())
                 }
             }
+            .navigationTitle("語音包")
         }
     }
 }
